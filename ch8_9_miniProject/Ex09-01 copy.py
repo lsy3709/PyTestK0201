@@ -36,32 +36,38 @@ def insertData(subject,press,pDate,pTime,link,imgLinkUrl) :
     #
     try :
         
-        print(null)
-        print(data1)
-        print(data2)
-        print(data3)
-        print(data4)
-        print(data5)
-        print(data6)
+        # print(null)
+        # print(data1)
+        # print(data2)
+        # print(data3)
+        # print(data4)
+        # print(data5)
+        # print(data6)
         sql = "INSERT INTO newsTable (title,publisher,newsDate,newsTime,newsDetail,newsImgUrl)  VALUES('"+ data1 + "','" + data2 + "','" + data3 + "','" + data4 + "','"+ data5 +"','"+data6+ "')"
-        print("sql 실행전 ")
+        print("순서2 : sql 실행전 ")
         cur.execute(sql)
         
     except :
-        print("예외 발생")
+        print('================================')
+        print("순서3 : 예외 발생")
+        print('================================')
+        
         
         # messagebox.showerror('오류', '데이터 입력 오류가 발생함')
     else :
-        print("성공")
+        print('================================')
+        print("순서3: 성공")
+        print('================================')
         # messagebox.showinfo('성공', '데이터 입력 성공')
     con.commit()
     con.close()
 ##
 page = 1
-nateUrl = "https://news.nate.com/recent?mid=n0100&page="
+nateUrl = "https://news.nate.com/recent?mid=n0105"
 while True :
+  try:    
     newsUrl = nateUrl + str(page)
-    page += 1
+    # page += 1
     htmlObject = urllib.request.urlopen(newsUrl,context=ssl_context)
     webPage = htmlObject.read()
     bsObject = bs4.BeautifulSoup(webPage, 'html.parser')
@@ -94,12 +100,24 @@ while True :
             press1,press2, pDate, pTime = pressAndDate.split()
             press = press1+press2
         else :
-            continue
-        print("데이터 추가 전")
+            pTime='pTime없음'
+            pDate='pDate없음'
+            press='press없음'
+            # continue
+        print("순서1: 데이터 추가 전")
+        print("subject: %s" % (subject))
+        print("press: %s" % (press))
+        print("pDate: %s" % (pDate))
+        print("pTime: %s" % (pTime))
+        print("link: %s" % (link))
+        print("imgLinkUrl: %s" % (imgLinkUrl))
+        print('================================')
+        print('================================')
         insertData(subject,press,pDate,pTime,link,imgLinkUrl)
-        print('(' , page, ')', subject)
-        print('\t https:'+link, press, pDate, pTime)
-        print('\t imgLink : '+ imgLinkUrl)
-        
-
-    time.sleep(60)
+        # print('(' , page, ')', subject)
+        # print('\t https:'+link, press, pDate, pTime)
+        # print('\t imgLink : '+ imgLinkUrl)
+  except:
+      break    
+   
+    # time.sleep(60)
