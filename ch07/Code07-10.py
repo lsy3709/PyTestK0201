@@ -4,6 +4,7 @@ from copy import copy
 workbook = openpyxl.load_workbook('c:/CookAnalysis/Excel/singer.xlsx')
 wsheetList = workbook.sheetnames
 
+#엑셀 쓰기 
 outWorkbook = openpyxl.Workbook()
 outWorkbook.remove(outWorkbook['Sheet']) # 기본으로 생성된 시트를 일단 제거
 
@@ -24,5 +25,5 @@ for wsName in wsheetList :
                 outCell.number_format = copy(inCell.number_format)
                 outCell.alignment = copy(inCell.alignment)
 
-outWorkbook.save('c:/CookAnalysis/Excel/singer_copy.xlsx')
+outWorkbook.save('c:/CookAnalysis/Excel/singer_copy_0629.xlsx')
 print("Save. OK~")
